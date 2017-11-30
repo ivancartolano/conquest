@@ -47,10 +47,9 @@ end
 
 
 function love.draw()
-	--mapa:draw(grassImage, dirtImage, waterImage, blueTileImage, blueTileSprite, brickImage, brickSprite )
-	--mapa:draw(grassImage, dirtImage, waterImage, blueTileImage, blueTileSprite, snowImage, snowSprite )
+	
 	mapa:draw(grassImage, dirtImage, waterImage, snowImage, snowSprite, brickImage, brickSprite )
-	steven:desenhar(imageFile, 177, 188, 199)
+	steven:desenhar(imageFile, 250, 0, 199)
 end
 
 

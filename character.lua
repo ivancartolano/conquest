@@ -63,7 +63,6 @@ local Character = {
 	end
 	
 	function Character:carregar(coorMatricialX, coorMatricialY, initialFrame, sprites,imageFile)
-	--function Character:carregar(mapaX,mapaY, coorMatricialX, coorMatricialY, initialFrame, sprites,imageFile, onome, individualMap)
 		
 		self.frames = sprites
 		self.currentFrame = initialFrame
@@ -72,11 +71,33 @@ local Character = {
 		self.coordenadaMatricialY = coorMatricialY
 		self.currentX = matricialToGlobal(coorMatricialY)
 		self.currentY = matricialToGlobal(coorMatricialX)
-		--self.nome = onome
-		--self.costmap = individualMap
 		
 		charmap[self.coordenadaMatricialX][self.coordenadaMatricialY] = 1
 		
+	end
+	
+	function Character:movimento(dt)
+	
+		if (not (self.emMovimento)) then	
+			local coin = math.random(2)
+		
+			if (coin == 1) then -- random move  
+		
+			else -- greedy move
+		
+			end
+		end
+	
+	end
+	
+	function Character:stand(dt)
+		emMovimento = false
+		charmap[self.coordenadaMatricialX][self.coordenadaMatricialY] = 1
+		--charmap[self.coordenadaMatricialX][self.coordenadaMatricialY] = charmap[self.coordenadaMatricialX][self.coordenadaMatricialY] + 1
+		--if(charmap[self.coordenadaMatricialX][self.coordenadaMatricialY] > 100) then
+		--	self.deadlock = true 
+		--	charmap[self.coordenadaMatricialX][self.coordenadaMatricialY] = 1
+		--end
 	end
 
 	function Character:moveDown(dt)
