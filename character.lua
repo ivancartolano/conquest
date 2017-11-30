@@ -15,20 +15,26 @@ local Character = {
 	nome,
 	deadlock = false,
 	turno = 0,
+	forca = 1,
+	taxa,
+	team,
+	rival1,
+	rival2,
+	rival3,
 
 
-	bitmap = {
-		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		{1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,1,0,1,1,1,1,0,0,0,0,0,0,1,0,0,1},
-		{1,0,0,0,0,0,1,0,0,1,0,0,0,1,0,0,0,0,0,1},
-		{1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1},
-		{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		},
+	--bitmap = {
+	--	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	--	{1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1},
+	--	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	--	{1,0,0,0,1,0,1,1,1,1,0,0,0,0,0,0,1,0,0,1},
+	--	{1,0,0,0,0,0,1,0,0,1,0,0,0,1,0,0,0,0,0,1},
+	--	{1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,1},
+	--	{1,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1,0,0,0,1},
+	--	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+	--	{1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1},
+	--	{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	--	},
 		
 	
 	costmap	
@@ -37,16 +43,16 @@ local Character = {
 		
 		
 	local charmap = {
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
 		}
 		
 	
@@ -62,7 +68,7 @@ local Character = {
 		return aux
 	end
 	
-	function Character:carregar(coorMatricialX, coorMatricialY, initialFrame, sprites,imageFile)
+	function Character:carregar(coorMatricialX, coorMatricialY, initialFrame, sprites, parTeam, parRival1, parRival2, parRival3)
 		
 		self.frames = sprites
 		self.currentFrame = initialFrame
@@ -71,33 +77,151 @@ local Character = {
 		self.coordenadaMatricialY = coorMatricialY
 		self.currentX = matricialToGlobal(coorMatricialY)
 		self.currentY = matricialToGlobal(coorMatricialX)
+		self.team = parTeam
+		self.rival1 = parRival1
+		self.rival2 = parRival2
+		self.rival3 = parRival3
 		
 		charmap[self.coordenadaMatricialX][self.coordenadaMatricialY] = 1
+		
+	end
+	
+	function Character:most(x,y)
+		local maximo = self.team[x][y]
+		if (x < 10) then
+			if (maximo < self.team[x + 1][y]) then
+				maximo = self.team[x + 1][y]
+			end
+		end
+		if (x > 1) then
+			if (maximo < self.team[x - 1][y]) then
+				maximo = self.team[x - 1][y]
+			end
+		end
+		if (y < 20) then
+			if (maximo < self.team[x][y + 1]) then
+				maximo = self.team[x][y + 1]
+			end
+		end
+		if ( y > 1) then 
+			if (maximo < self.team[x][y - 1]) then
+				maximo = self.team[x][y - 1]
+			end
+		end
+		return maximo
+	end
+	
+	function Character:atualizar()
+		local r1= self.rival1[self.coordenadaMatricialX][self.coordenadaMatricialY] 
+		local r2= self.rival2[self.coordenadaMatricialX][self.coordenadaMatricialY] 
+		local r3= self.rival3[self.coordenadaMatricialX][self.coordenadaMatricialY] 
+
+		if ((self.rival1[self.coordenadaMatricialX][self.coordenadaMatricialY] - (self.taxa* self.forca/3)) > 0 ) then 
+			self.rival1[self.coordenadaMatricialX][self.coordenadaMatricialY] = self.rival1[self.coordenadaMatricialX][self.coordenadaMatricialY] - (self.taxa* self.forca/3)
+		else	
+			self.rival1[self.coordenadaMatricialX][self.coordenadaMatricialY] = 0 
+		end
+		
+		if ((self.rival2[self.coordenadaMatricialX][self.coordenadaMatricialY] - (self.taxa* self.forca/3)) > 0 ) then 
+			self.rival2[self.coordenadaMatricialX][self.coordenadaMatricialY] = self.rival2[self.coordenadaMatricialX][self.coordenadaMatricialY] - (self.taxa* self.forca/3)
+		else	
+			self.rival2[self.coordenadaMatricialX][self.coordenadaMatricialY] = 0 
+		end
+		
+		if ((self.rival3[self.coordenadaMatricialX][self.coordenadaMatricialY] - (self.taxa* self.forca/3)) > 0 ) then 
+			self.rival3[self.coordenadaMatricialX][self.coordenadaMatricialY] = self.rival3[self.coordenadaMatricialX][self.coordenadaMatricialY] - (self.taxa* self.forca/3)
+		else	
+			self.rival3[self.coordenadaMatricialX][self.coordenadaMatricialY] = 0 
+		end
+		
+		self.team[coordenadaMatricialX][coordenadaMatricialY] = self.team[coordenadaMatricialX][coordenadaMatricialY] + (r1 - self.rival1[self.coordenadaMatricialX][self.coordenadaMatricialY])
+		self.team[coordenadaMatricialX][coordenadaMatricialY] = self.team[coordenadaMatricialX][coordenadaMatricialY] + (r2 - self.rival2[self.coordenadaMatricialX][self.coordenadaMatricialY])
+		self.team[coordenadaMatricialX][coordenadaMatricialY] = self.team[coordenadaMatricialX][coordenadaMatricialY] + (r3 - self.rival3[self.coordenadaMatricialX][self.coordenadaMatricialY])
+		
+		self.forca = self.team[coordenadaMatricialX][coordenadaMatricialY]
 		
 	end
 	
 	function Character:movimento(dt)
 	
-		if (not (self.emMovimento)) then	
+		
+	
+		if (not (self.emMovimento)) then
+			movimentoPossivel = {}
 			local coin = math.random(2)
 		
 			if (coin == 1) then -- random move  
-		
+			
+				if (self.coordenadaMatricialX < 10) then
+					if (charmap[self.coordenadaMatricialX+1][self.coordenadaMatricialY ] == 0)then
+						table.insert(movimentoPossivel, 'down')
+					end
+				end
+				if (self.coordenadaMatricialX > 1) then
+					if (charmap[self.coordenadaMatricialX-1][self.coordenadaMatricialY ] == 0)then
+						table.insert(movimentoPossivel, 'up')
+					end
+				end
+				if (self.coordenadaMatricialY < 20) then
+					if (charmap[self.coordenadaMatricialX][self.coordenadaMatricialY + 1 ] == 0)then
+						table.insert(movimentoPossivel, 'right')
+					end
+				end
+				if (self.coordenadaMatricialY > 1) then
+					if (charmap[self.coordenadaMatricialX][self.coordenadaMatricialY + 1 ] == 0)then
+						table.insert(movimentoPossivel, 'right')
+					end
+				end
+				
 			else -- greedy move
+			
+				local maximo = self:most(self.coordenadaMatricialX, self.coordenadaMatricialY)
+				
+				if (self.coordenadaMatricialX < 10) then
+					if ((charmap[self.coordenadaMatricialX+1][self.coordenadaMatricialY ] == 0) and (self.team[self.coordenadaMatricialX+1][self.coordenadaMatricialY ] == maximo)) then
+						table.insert(movimentoPossivel, 'down')
+					end
+				end
+				if (self.coordenadaMatricialX > 1) then
+					if ((charmap[self.coordenadaMatricialX-1][self.coordenadaMatricialY ] == 0) and (self.team[self.coordenadaMatricialX-1][self.coordenadaMatricialY ] == maximo)) then
+						table.insert(movimentoPossivel, 'up')
+					end
+				end
+				if (self.coordenadaMatricialY < 20) then
+					if ((charmap[self.coordenadaMatricialX][self.coordenadaMatricialY + 1 ] == 0) and (self.team[self.coordenadaMatricialX][self.coordenadaMatricialY +1 ] == maximo)) then
+						table.insert(movimentoPossivel, 'right')
+					end
+				end
+				if (self.coordenadaMatricialY > 1) then
+					if ((charmap[self.coordenadaMatricialX][self.coordenadaMatricialY + 1 ] == 0) and (self.team[self.coordenadaMatricialX][self.coordenadaMatricialY -1] == maximo))then
+						table.insert(movimentoPossivel, 'right')
+					end
+				end
 		
+			end -- fim do else
+			
+			local movimentoEscolhido = movimentoPossivel[math.random(#movimentoPossivel)]		
+		
+			if movimentoEscolhido == 'down' then
+				self.acao = self.moveDown
+			elseif (movimentoEscolhido == 'up') then
+				self.acao = self.moveUp
+			elseif movimentoEscolhido == 'right' then
+				self.acao = self.moveRight
+			elseif movimentoEscolhido == 'left' then
+				self.acao = self.moveLeft
+			else
+				self.acao = self.stand
 			end
+			
 		end
-	
+		
+		self:acao(dt)	
 	end
 	
 	function Character:stand(dt)
 		emMovimento = false
 		charmap[self.coordenadaMatricialX][self.coordenadaMatricialY] = 1
-		--charmap[self.coordenadaMatricialX][self.coordenadaMatricialY] = charmap[self.coordenadaMatricialX][self.coordenadaMatricialY] + 1
-		--if(charmap[self.coordenadaMatricialX][self.coordenadaMatricialY] > 100) then
-		--	self.deadlock = true 
-		--	charmap[self.coordenadaMatricialX][self.coordenadaMatricialY] = 1
-		--end
 	end
 
 	function Character:moveDown(dt)
@@ -129,7 +253,7 @@ local Character = {
 			self.emMovimento = false
 			self.contadorIncremento = 0
 			self.coordenadaMatricialX = self.coordenadaMatricialX + 1
-			
+			self:atualizar()
 		end
 		
 	end
@@ -164,6 +288,7 @@ local Character = {
 			self.emMovimento = false
 			self.contadorIncremento = 0
 			self.coordenadaMatricialX = self.coordenadaMatricialX - 1
+			self:atualizar()
 		end
 		
 	end
@@ -198,6 +323,7 @@ local Character = {
 			self.emMovimento = false
 			self.contadorIncremento = 0
 			self.coordenadaMatricialY = self.coordenadaMatricialY + 1
+			self:atualizar()
 		end
 		
 	end
@@ -232,13 +358,15 @@ local Character = {
 			self.emMovimento = false
 			self.contadorIncremento = 0
 			self.coordenadaMatricialY = self.coordenadaMatricialY - 1
+			self:atualizar()
 		end
 		
 	end
 
 	
 	function Character:desenhar(imageFile, red, green, blue)
-		love.graphics.setColor(red,green,blue,150)
+		--love.graphics.setColor(red,green,blue,150)
+		love.graphics.setColor(red,green,blue,255*self.forca)
 		love.graphics.circle("fill", self.currentX+16, self.currentY+ 16, 20)
 		love.graphics.setColor(255,255,255,255)
 		love.graphics.draw(imageFile, self.activeFrame, self.currentX, self.currentY)

@@ -12,8 +12,8 @@ local blueTileSprite
 local blueTileImage
 local snowSprite
 local snowImage
-local stevenSprite
-local steven = character:new()
+--local stevenSprite
+--local steven = character:new()
 
 local contador = 0
 
@@ -35,21 +35,22 @@ function love.load()
 	snowImage = love.graphics.newImage("images/snow512square.png")
 	snowSprite =tile:preencherQuad(7,0,snowImage)
 	
-	stevenSprite = sprite:preencherFrames(0,0,imageFile)
-	steven:carregar(5,11, 1, stevenSprite, imageFile)
+	mapa:preencherSprites(imageFile)
+	mapa:carregar()
+	--stevenSprite = sprite:preencherFrames(0,0,imageFile)
+	--steven:carregar(5,11, 1, stevenSprite)
 
 end
 
 function love.update(dt)
-	
-	
+	mapa:atualizar(dt)	
 end
 
 
 function love.draw()
 	
-	mapa:draw(grassImage, dirtImage, waterImage, snowImage, snowSprite, brickImage, brickSprite )
-	steven:desenhar(imageFile, 250, 0, 199)
+	mapa:draw(grassImage, dirtImage, waterImage, snowImage, snowSprite, brickImage, brickSprite, imageFile )
+	--steven:desenhar(imageFile, 250, 0, 199)
 end
 
 

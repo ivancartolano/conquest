@@ -1,3 +1,27 @@
+--local character = require "Character"
+local sprite = require "Sprite"
+local equipe = require "Equipe"
+
+--stevenSprites = Sprite:preencherFrames(0,0,imageFile)
+--garnetSprites = Sprite:preencherFrames(3,0,imageFile)
+--amethystSprites = Sprite:preencherFrames(6,0,imageFile)
+--pearlSprites = Sprite:preencherFrames(9,0,imageFile)
+
+local stevenSprites
+local garnetSprites
+local amethystSprites
+local pearlSprites 
+
+local pinkVec = {}
+local blueVec = {}
+local greenVec = {}
+local yellowVec = {}
+
+local pinkTeam = equipe:new()
+local blueTeam = equipe:new()
+local greenTeam = equipe:new()
+local yellowTeam = equipe:new()
+
 local mapa = {}
 
 		
@@ -53,9 +77,29 @@ local mapa = {}
 		{0,0,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,1,1},
 	}
 		
+	function mapa:preencherSprites(imageFile)
+		stevenSprites = sprite:preencherFrames(0,0,imageFile)
+		garnetSprites = sprite:preencherFrames(3,0,imageFile)
+		amethystSprites = sprite:preencherFrames(6,0,imageFile)
+		pearlSprites = sprite:preencherFrames(9,0,imageFile)
+	end
+	
+	function mapa:carregar()
+		pinkTeam:carregar(pinkVec,1,1,1,stevenSprites, pinkTeamMap, blueTeamMap, greenTeamMap, yellowTeamMap, 250, 0, 199)
+		blueTeam:carregar(blueVec,9,1,1,pearlSprites, blueTeamMap, pinkTeamMap, greenTeamMap, yellowTeamMap, 0, 0, 255)
+		greenTeam:carregar(greenVec,1,19,amethystSprites, greenTeamMap, pinkTeamMap, blueTeamMap, yellowTeamMap, 0, 255, 0)
+		yellowTeam:carregar(yellowVec,9,19,garnetSprites,yellowTeamMap,pinkTeamMap,blueTeamMap, greenTeamMap, 255,255,0)
+	end
+	
+	function mapa:atualizar(dt)
+		pinkTeam:atualizar(dt)
+		blueTeam:atualizar(dt)
+		greenTeam:atualizar(dt)
+		yellowTeam:atualizar(dt)
+	end
 	
 	
-		function mapa:draw(grass, dirt, water, blueTileImage, blueTileQuad, brickTileImage, brickTileQuad)
+	function mapa:draw(grass, dirt, water, blueTileImage, blueTileQuad, brickTileImage, brickTileQuad, imageFile)
 		local i
 		local j
 		
@@ -92,7 +136,11 @@ local mapa = {}
 					love.graphics.draw(blueTileImage, blueTileQuad, (j-1)*64, (i-1)*64)
 				end
 			end
-		end
+		end --
+		pinkTeam:desenhar(imageFile)
+		blueTeam:desenhar(imageFile)
+		greenTeam:desenhar(imageFile)
+		yellowTeam:desenhar(imageFile)
 	
 	end
 	
