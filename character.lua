@@ -17,7 +17,7 @@ local Character = {
 	turno = 0,
 	forca = 1,
 	taxa,
-	team,
+	--team = {},
 	rival1,
 	rival2,
 	rival3,
@@ -68,7 +68,10 @@ local Character = {
 		return aux
 	end
 	
+	local team = {}
+	
 	function Character:carregar(coorMatricialX, coorMatricialY, initialFrame, sprites, parTeam, parRival1, parRival2, parRival3)
+	print("character:carregar")	
 		
 		self.frames = sprites
 		self.currentFrame = initialFrame
@@ -77,7 +80,8 @@ local Character = {
 		self.coordenadaMatricialY = coorMatricialY
 		self.currentX = matricialToGlobal(coorMatricialY)
 		self.currentY = matricialToGlobal(coorMatricialX)
-		self.team = parTeam
+		--self.team = parTeam
+		team = parTeam
 		self.rival1 = parRival1
 		self.rival2 = parRival2
 		self.rival3 = parRival3
@@ -86,32 +90,58 @@ local Character = {
 		
 	end
 	
+	--function Character:most(x,y)
+	--	local maximo = self.team[x][y]
+	--	if (x < 10) then
+	--		if (maximo < self.team[x + 1][y]) then
+	--			maximo = self.team[x + 1][y]
+	--		end
+	--	end
+	--	if (x > 1) then
+	--		if (maximo < self.team[x - 1][y]) then
+	--			maximo = self.team[x - 1][y]
+	--		end
+	--	end
+	--	if (y < 20) then
+	--		if (maximo < self.team[x][y + 1]) then
+	--			maximo = self.team[x][y + 1]
+	--		end
+	--	end
+	--	if ( y > 1) then 
+	--		if (maximo < self.team[x][y - 1]) then
+	--			maximo = self.team[x][y - 1]
+	--		end
+	--	end
+	--	return maximo
+	--end
+	
 	function Character:most(x,y)
-		local maximo = self.team[x][y]
+		local maximo = team[x][y]
 		if (x < 10) then
-			if (maximo < self.team[x + 1][y]) then
-				maximo = self.team[x + 1][y]
+			if (maximo < team[x + 1][y]) then
+				maximo = team[x + 1][y]
 			end
 		end
 		if (x > 1) then
-			if (maximo < self.team[x - 1][y]) then
-				maximo = self.team[x - 1][y]
+			if (maximo < team[x - 1][y]) then
+				maximo = team[x - 1][y]
 			end
 		end
 		if (y < 20) then
-			if (maximo < self.team[x][y + 1]) then
-				maximo = self.team[x][y + 1]
+			if (maximo < team[x][y + 1]) then
+				maximo = team[x][y + 1]
 			end
 		end
 		if ( y > 1) then 
-			if (maximo < self.team[x][y - 1]) then
-				maximo = self.team[x][y - 1]
+			if (maximo < team[x][y - 1]) then
+				maximo = team[x][y - 1]
 			end
 		end
 		return maximo
 	end
 	
 	function Character:atualizar()
+	print("character:atualizar")
 		local r1= self.rival1[self.coordenadaMatricialX][self.coordenadaMatricialY] 
 		local r2= self.rival2[self.coordenadaMatricialX][self.coordenadaMatricialY] 
 		local r3= self.rival3[self.coordenadaMatricialX][self.coordenadaMatricialY] 
@@ -144,7 +174,7 @@ local Character = {
 	
 	function Character:movimento(dt)
 	
-		
+		print("character:movimento")
 	
 		if (not (self.emMovimento)) then
 			movimentoPossivel = {}

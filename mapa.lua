@@ -78,6 +78,7 @@ local mapa = {}
 	}
 		
 	function mapa:preencherSprites(imageFile)
+	print("mapa:preencherSprites()")
 		stevenSprites = sprite:preencherFrames(0,0,imageFile)
 		garnetSprites = sprite:preencherFrames(3,0,imageFile)
 		amethystSprites = sprite:preencherFrames(6,0,imageFile)
@@ -85,13 +86,15 @@ local mapa = {}
 	end
 	
 	function mapa:carregar()
+	print("mapa:carregar()")
 		pinkTeam:carregar(pinkVec,1,1,1,stevenSprites, pinkTeamMap, blueTeamMap, greenTeamMap, yellowTeamMap, 250, 0, 199)
 		blueTeam:carregar(blueVec,9,1,1,pearlSprites, blueTeamMap, pinkTeamMap, greenTeamMap, yellowTeamMap, 0, 0, 255)
-		greenTeam:carregar(greenVec,1,19,amethystSprites, greenTeamMap, pinkTeamMap, blueTeamMap, yellowTeamMap, 0, 255, 0)
-		yellowTeam:carregar(yellowVec,9,19,garnetSprites,yellowTeamMap,pinkTeamMap,blueTeamMap, greenTeamMap, 255,255,0)
+		greenTeam:carregar(greenVec,1,19,1,amethystSprites, greenTeamMap, pinkTeamMap, blueTeamMap, yellowTeamMap, 0, 255, 0)
+		yellowTeam:carregar(yellowVec,9,19,1,garnetSprites,yellowTeamMap,pinkTeamMap,blueTeamMap, greenTeamMap, 255,255,0)
 	end
 	
 	function mapa:atualizar(dt)
+	print("mapa:atualizar()")
 		pinkTeam:atualizar(dt)
 		blueTeam:atualizar(dt)
 		greenTeam:atualizar(dt)

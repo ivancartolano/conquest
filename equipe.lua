@@ -10,34 +10,37 @@ function Equipe:new(o)
 	end
 
 function Equipe:carregar(vet, mapaX, mapaY, initialFrame, sprites, matTeam, rival1, rival2, rival3, r, g, b)
+print("equipe:carregar")
 	
-	personagens = vet
+	self.personagens = vet
 	
 	self.red = r
 	self.green = g
 	self.blue = b
 	
 	local aux = character:new(mapaX, mapaY, initialFrame, sprites, matTeam, rival1, rival2, rival3)
-	table.insert(personagens,aux)
+	table.insert(self.personagens,aux)
 	
 	aux = character:new(mapaX + 1, mapaY, initialFrame, sprites, matTeam, rival1, rival2, rival3)
-	table.insert(personagens,aux)
+	table.insert(self.personagens,aux)
 	
 	aux = character:new(mapaX, mapaY + 1, initialFrame, sprites, matTeam, rival1, rival2, rival3)
-	table.insert(personagens,aux)
+	table.insert(self.personagens,aux)
 	
 	aux = character:new(mapaX + 1, mapaY + 1, initialFrame, sprites, matTeam, rival1, rival2, rival3)
-	table.insert(personagens,aux)
+	table.insert(self.personagens,aux)
 	
 end
 
 function Equipe:atualizar(dt)
+print("equipe:atualizar")
 	for i, v in ipairs(self.personagens) do
-		v:atualizar(dt)
+		v:movimento(dt)
 	end
 end
 
 function Equipe:desenhar(imageFile)
+print("equipe:desenhar")
 	for i, v in ipairs(self.personagens) do
 		v:desenhar(imageFile, self.red, self.green, self.blue)
 	end
