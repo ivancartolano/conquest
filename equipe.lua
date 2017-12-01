@@ -34,6 +34,14 @@ print("equipe:carregar")
 	aux4:carregar(mapaX + 1, mapaY + 1, initialFrame, sprites, matTeam, rival1, rival2, rival3, name)
 	table.insert(self.personagens,aux4)
 	
+	--local aux5 = character:new()
+	--aux5:carregar(mapaX + 1, mapaY + 2, initialFrame, sprites, matTeam, rival1, rival2, rival3, name)
+	--table.insert(self.personagens,aux5)
+	
+	--local aux6 = character:new()
+	--aux6:carregar(mapaX + 1, mapaY + 1, initialFrame, sprites, matTeam, rival1, rival2, rival3, name)
+	--table.insert(self.personagens,aux6)
+	
 end
 
 function Equipe:atualizar(dt)
