@@ -9,7 +9,7 @@ function Equipe:new(o)
 		return o
 	end
 
-function Equipe:carregar(vet, mapaX, mapaY, initialFrame, sprites, matTeam, rival1, rival2, rival3, r, g, b)
+function Equipe:carregar(vet, mapaX, mapaY, initialFrame, sprites, matTeam, rival1, rival2, rival3, r, g, b, name)
 print("equipe:carregar")
 	
 	self.personagens = vet
@@ -18,17 +18,21 @@ print("equipe:carregar")
 	self.green = g
 	self.blue = b
 	
-	local aux = character:new(mapaX, mapaY, initialFrame, sprites, matTeam, rival1, rival2, rival3)
-	table.insert(self.personagens,aux)
+	local aux1 = character:new()
+	aux1:carregar(mapaX, mapaY, initialFrame, sprites, matTeam, rival1, rival2, rival3, name)
+	table.insert(self.personagens,aux1)
 	
-	aux = character:new(mapaX + 1, mapaY, initialFrame, sprites, matTeam, rival1, rival2, rival3)
-	table.insert(self.personagens,aux)
+	local aux2 = character:new()
+	aux2:carregar(mapaX + 1, mapaY, initialFrame, sprites, matTeam, rival1, rival2, rival3, name)
+	table.insert(self.personagens,aux2)
 	
-	aux = character:new(mapaX, mapaY + 1, initialFrame, sprites, matTeam, rival1, rival2, rival3)
-	table.insert(self.personagens,aux)
+	local aux3 = character:new()
+	aux3:carregar(mapaX, mapaY + 1, initialFrame, sprites, matTeam, rival1, rival2, rival3, name)
+	table.insert(self.personagens,aux3)
 	
-	aux = character:new(mapaX + 1, mapaY + 1, initialFrame, sprites, matTeam, rival1, rival2, rival3)
-	table.insert(self.personagens,aux)
+	local aux4 = character:new()
+	aux4:carregar(mapaX + 1, mapaY + 1, initialFrame, sprites, matTeam, rival1, rival2, rival3, name)
+	table.insert(self.personagens,aux4)
 	
 end
 
@@ -40,9 +44,11 @@ print("equipe:atualizar")
 end
 
 function Equipe:desenhar(imageFile)
-print("equipe:desenhar")
+print("equipe:desenhar----------------")
+print("tamanho do vetor =".. #self.personagens)
 	for i, v in ipairs(self.personagens) do
 		v:desenhar(imageFile, self.red, self.green, self.blue)
+		print(v.nome)
 	end
 end
 

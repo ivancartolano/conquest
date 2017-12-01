@@ -16,26 +16,13 @@ local Character = {
 	deadlock = false,
 	turno = 0,
 	forca = 1,
-	taxa,
-	--team = {},
+	taxa = 0.3,
+	team ,
 	rival1,
 	rival2,
 	rival3,
 
 
-	--bitmap = {
-	--	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-	--	{1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1},
-	--	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	--	{1,0,0,0,1,0,1,1,1,1,0,0,0,0,0,0,1,0,0,1},
-	--	{1,0,0,0,0,0,1,0,0,1,0,0,0,1,0,0,0,0,0,1},
-	--	{1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,1},
-	--	{1,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1,0,0,0,1},
-	--	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	--	{1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1},
-	--	{2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-	--	},
-		
 	
 	costmap	
 		}
@@ -70,7 +57,7 @@ local Character = {
 	
 	local team = {}
 	
-	function Character:carregar(coorMatricialX, coorMatricialY, initialFrame, sprites, parTeam, parRival1, parRival2, parRival3)
+	function Character:carregar(coorMatricialX, coorMatricialY, initialFrame, sprites, parTeam, parRival1, parRival2, parRival3,onome)
 	print("character:carregar")	
 		
 		self.frames = sprites
@@ -80,65 +67,66 @@ local Character = {
 		self.coordenadaMatricialY = coorMatricialY
 		self.currentX = matricialToGlobal(coorMatricialY)
 		self.currentY = matricialToGlobal(coorMatricialX)
-		--self.team = parTeam
-		team = parTeam
+		self.team = parTeam
+		--team = parTeam
 		self.rival1 = parRival1
 		self.rival2 = parRival2
 		self.rival3 = parRival3
+		self.nome = onome
 		
 		charmap[self.coordenadaMatricialX][self.coordenadaMatricialY] = 1
 		
 	end
 	
-	--function Character:most(x,y)
-	--	local maximo = self.team[x][y]
-	--	if (x < 10) then
-	--		if (maximo < self.team[x + 1][y]) then
-	--			maximo = self.team[x + 1][y]
-	--		end
-	--	end
-	--	if (x > 1) then
-	--		if (maximo < self.team[x - 1][y]) then
-	--			maximo = self.team[x - 1][y]
-	--		end
-	--	end
-	--	if (y < 20) then
-	--		if (maximo < self.team[x][y + 1]) then
-	--			maximo = self.team[x][y + 1]
-	--		end
-	--	end
-	--	if ( y > 1) then 
-	--		if (maximo < self.team[x][y - 1]) then
-	--			maximo = self.team[x][y - 1]
-	--		end
-	--	end
-	--	return maximo
-	--end
-	
 	function Character:most(x,y)
-		local maximo = team[x][y]
+		local maximo = self.team[x][y]
 		if (x < 10) then
-			if (maximo < team[x + 1][y]) then
-				maximo = team[x + 1][y]
+			if (maximo < self.team[x + 1][y]) then
+				maximo = self.team[x + 1][y]
 			end
 		end
 		if (x > 1) then
-			if (maximo < team[x - 1][y]) then
-				maximo = team[x - 1][y]
+			if (maximo < self.team[x - 1][y]) then
+				maximo = self.team[x - 1][y]
 			end
 		end
 		if (y < 20) then
-			if (maximo < team[x][y + 1]) then
-				maximo = team[x][y + 1]
+			if (maximo < self.team[x][y + 1]) then
+				maximo = self.team[x][y + 1]
 			end
 		end
 		if ( y > 1) then 
-			if (maximo < team[x][y - 1]) then
-				maximo = team[x][y - 1]
+			if (maximo < self.team[x][y - 1]) then
+				maximo = self.team[x][y - 1]
 			end
 		end
 		return maximo
 	end
+	
+--	function Character:most(x,y)
+--		local maximo = team[x][y]
+--		if (x < 10) then
+--			if (maximo < team[x + 1][y]) then
+--				maximo = team[x + 1][y]
+--			end
+--		end
+--		if (x > 1) then
+--			if (maximo < team[x - 1][y]) then
+--				maximo = team[x - 1][y]
+--			end
+--		end
+--		if (y < 20) then
+--			if (maximo < team[x][y + 1]) then
+--				maximo = team[x][y + 1]
+--			end
+--		end
+--		if ( y > 1) then 
+--			if (maximo < team[x][y - 1]) then
+--				maximo = team[x][y - 1]
+--			end
+--		end
+--		return maximo
+--	end
 	
 	function Character:atualizar()
 	print("character:atualizar")
@@ -164,11 +152,11 @@ local Character = {
 			self.rival3[self.coordenadaMatricialX][self.coordenadaMatricialY] = 0 
 		end
 		
-		self.team[coordenadaMatricialX][coordenadaMatricialY] = self.team[coordenadaMatricialX][coordenadaMatricialY] + (r1 - self.rival1[self.coordenadaMatricialX][self.coordenadaMatricialY])
-		self.team[coordenadaMatricialX][coordenadaMatricialY] = self.team[coordenadaMatricialX][coordenadaMatricialY] + (r2 - self.rival2[self.coordenadaMatricialX][self.coordenadaMatricialY])
-		self.team[coordenadaMatricialX][coordenadaMatricialY] = self.team[coordenadaMatricialX][coordenadaMatricialY] + (r3 - self.rival3[self.coordenadaMatricialX][self.coordenadaMatricialY])
+		self.team[self.coordenadaMatricialX][self.coordenadaMatricialY] = self.team[self.coordenadaMatricialX][self.coordenadaMatricialY] + (r1 - self.rival1[self.coordenadaMatricialX][self.coordenadaMatricialY])
+		self.team[self.coordenadaMatricialX][self.coordenadaMatricialY] = self.team[self.coordenadaMatricialX][self.coordenadaMatricialY] + (r2 - self.rival2[self.coordenadaMatricialX][self.coordenadaMatricialY])
+		self.team[self.coordenadaMatricialX][self.coordenadaMatricialY] = self.team[self.coordenadaMatricialX][self.coordenadaMatricialY] + (r3 - self.rival3[self.coordenadaMatricialX][self.coordenadaMatricialY])
 		
-		self.forca = self.team[coordenadaMatricialX][coordenadaMatricialY]
+		self.forca = self.team[self.coordenadaMatricialX][self.coordenadaMatricialY]
 		
 	end
 	
@@ -198,8 +186,8 @@ local Character = {
 					end
 				end
 				if (self.coordenadaMatricialY > 1) then
-					if (charmap[self.coordenadaMatricialX][self.coordenadaMatricialY + 1 ] == 0)then
-						table.insert(movimentoPossivel, 'right')
+					if (charmap[self.coordenadaMatricialX][self.coordenadaMatricialY - 1 ] == 0)then
+						table.insert(movimentoPossivel, 'left')
 					end
 				end
 				
@@ -223,8 +211,8 @@ local Character = {
 					end
 				end
 				if (self.coordenadaMatricialY > 1) then
-					if ((charmap[self.coordenadaMatricialX][self.coordenadaMatricialY + 1 ] == 0) and (self.team[self.coordenadaMatricialX][self.coordenadaMatricialY -1] == maximo))then
-						table.insert(movimentoPossivel, 'right')
+					if ((charmap[self.coordenadaMatricialX][self.coordenadaMatricialY -1 ] == 0) and (self.team[self.coordenadaMatricialX][self.coordenadaMatricialY -1] == maximo))then
+						table.insert(movimentoPossivel, 'left')
 					end
 				end
 		

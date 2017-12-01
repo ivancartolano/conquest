@@ -12,6 +12,14 @@ local garnetSprites
 local amethystSprites
 local pearlSprites 
 
+--local steven1
+--local steven2
+--local steven3
+--local steven4
+
+--local pearl1
+--local pearl2
+
 local pinkVec = {}
 local blueVec = {}
 local greenVec = {}
@@ -87,10 +95,10 @@ local mapa = {}
 	
 	function mapa:carregar()
 	print("mapa:carregar()")
-		pinkTeam:carregar(pinkVec,1,1,1,stevenSprites, pinkTeamMap, blueTeamMap, greenTeamMap, yellowTeamMap, 250, 0, 199)
-		blueTeam:carregar(blueVec,9,1,1,pearlSprites, blueTeamMap, pinkTeamMap, greenTeamMap, yellowTeamMap, 0, 0, 255)
-		greenTeam:carregar(greenVec,1,19,1,amethystSprites, greenTeamMap, pinkTeamMap, blueTeamMap, yellowTeamMap, 0, 255, 0)
-		yellowTeam:carregar(yellowVec,9,19,1,garnetSprites,yellowTeamMap,pinkTeamMap,blueTeamMap, greenTeamMap, 255,255,0)
+		pinkTeam:carregar(pinkVec,1,1,1,stevenSprites, pinkTeamMap, blueTeamMap, greenTeamMap, yellowTeamMap, 250, 0, 199, "steven")
+		blueTeam:carregar(blueVec,9,1,1,pearlSprites, blueTeamMap, pinkTeamMap, greenTeamMap, yellowTeamMap, 0, 0, 255, "pearl")
+		greenTeam:carregar(greenVec,1,19,1,amethystSprites, greenTeamMap, pinkTeamMap, blueTeamMap, yellowTeamMap, 0, 255, 0, "amet")
+		yellowTeam:carregar(yellowVec,9,19,1,garnetSprites,yellowTeamMap,pinkTeamMap,blueTeamMap, greenTeamMap, 255,255,0, "garnet")
 	end
 	
 	function mapa:atualizar(dt)
